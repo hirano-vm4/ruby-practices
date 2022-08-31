@@ -1,0 +1,63 @@
+#!/usr/bin/env ruby
+require "optparse"
+require "date"
+
+#本日
+today = Date.today
+
+#オプションの設定
+opt = OptionParser.new
+
+opt.on("-m") {|v| v}
+opt.on("-y") {|v| v}
+
+opt.parse!(ARGV)
+
+
+#月・年の引数を代入。引数がない場合は今年の年月
+month = ARGV[0] || today.month 
+year = ARGV[1] || today.year
+
+#最初の日
+first_day = Date.new(year.to_i, month.to_i, 1)
+
+#最後の日
+last_day = Date.new(year.to_i, month.to_i, -1)
+
+#曜日
+week_of_day = %w[日 月 火 水 木 金 土]
+
+#最初の日が何曜日か
+first_wday = first_day.wday
+
+#1日から最終日
+days = (first_day..last_day)
+
+
+#ヘッダー
+header = "#{month}月 #{year}"
+
+#月・年
+puts header.center(20)
+
+#曜日の表示
+print week_of_day.join(" ") + "\n"
+
+#1週目のスペース（何曜日か）
+print "   " * first_wday
+
+#日の表示
+days.each do |day|
+  #今日かつ土曜日であれば色を反転して改行
+  if day == today && day.wday == 6
+    print "\e[47m#{day.mday.to_s.rjust(2)}\e[0m" + " \n"
+  #土曜日だったら改行
+  elsif day.wday == 6
+    print day.mday.to_s.rjust(2) + " \n"
+  #今日だったら色を反転
+  elsif day == today 
+    print "\e[47m#{day.mday.to_s.rjust(2)}\e[0m" + " "
+  else
+    print day.mday.to_s.rjust(2) + " "
+  end
+end
