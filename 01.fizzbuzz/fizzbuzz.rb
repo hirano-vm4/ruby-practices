@@ -1,13 +1,13 @@
 #!/usr/bin/env ruby
 (1..20).each do |num|
   case 
-  when print % 3 == 0 && print % 5 == 0
+  when num % 3 == 0 && num % 5 == 0
     puts "FizzBuzz"
-  when print % 3 == 0
+  when num % 3 == 0
     puts "Fizz"
-  when print % 5 == 0
+  when num % 5 == 0
     puts "Buzz"
   else
-   puts print
+   puts num
   end
 end
