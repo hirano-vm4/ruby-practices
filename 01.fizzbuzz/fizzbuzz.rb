@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-(1..20).each do |print|
+(1..20).each do |num|
   case 
   when print % 3 == 0 && print % 5 == 0
     puts "FizzBuzz"
