@@ -7,28 +7,28 @@ today = Date.today
 
 #オプションの設定
 
-params = ARGV.getopts("m:y:")
+hash = ARGV.getopts("m:y:")
 
-params_m = params["m"].to_i
-params_y = params["y"].to_i
+hash_m = hash["m"].to_i
+hash_y = hash["y"].to_i
 
 
 #月・年の引数を代入。引数がない場合は今年の年月
 
 # month変数の条件 
 month =
-if params_m == 0
+if hash_m == 0
   today.month
 else
-  params_m
+  hash_m
 end
 
 #year変数の条件
 year =
-if params_y == 0
+if hash_y == 0
   today.year
 else
-  params_y
+  hash_y
 end
 
 #最初の日
