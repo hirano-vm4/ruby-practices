@@ -2,22 +2,40 @@
 require "optparse"
 require "date"
 
-#本日
+#今日の日付
 today = Date.today
 
 #オプションの設定
 
-params = ARGV.getopts("m:y:")
+hash = ARGV.getopts("m:y:")
+
+hash_m = hash["m"].to_i
+hash_y = hash["y"].to_i
+
 
 #月・年の引数を代入。引数がない場合は今年の年月
-month = params[:m] || today.month 
-year = params[:y] || today.year
+
+# month変数の条件 
+month =
+if hash_m == 0
+  today.month
+else
+  hash_m
+end
+
+#year変数の条件
+year =
+if hash_y == 0
+  today.year
+else
+  hash_y
+end
 
 #最初の日
-first_day = Date.new(year.to_i, month.to_i, 1)
+first_day = Date.new(year, month, 1)
 
 #最後の日
-last_day = Date.new(year.to_i, month.to_i, -1)
+last_day = Date.new(year, month, -1)
 
 #曜日
 week_of_day = %w[日 月 火 水 木 金 土]
@@ -27,6 +45,9 @@ first_wday = first_day.wday
 
 #1日から最終日
 days = (first_day..last_day)
+
+
+
 
 
 #ヘッダー
