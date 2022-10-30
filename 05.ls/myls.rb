@@ -15,9 +15,9 @@ def string_count
   current_element.map(&:length).max
 end
 
-def array_adjustment
+def modified_element
   sliced = current_element.map { |d| d.ljust(string_count) }.each_slice(height).to_a
   sliced.map { |data| data.values_at(0...height) }.transpose.map { |display| display.join(' ') }
 end
 
-puts array_adjustment
+puts modified_element
