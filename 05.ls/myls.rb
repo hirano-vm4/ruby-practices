@@ -6,8 +6,7 @@ require 'optparse'
 DISPLAY_NUMBER = 3
 
 def main
-  acquired_elements = current_element
-  puts modified_element(acquired_elements)
+  puts modified_element(current_element)
 end
 
 def current_element
@@ -15,10 +14,10 @@ def current_element
   options['a'] ? Dir.glob('*', File::FNM_DOTMATCH) : Dir.glob('*')
 end
 
-def modified_element(acquired_elements)
-  height = acquired_elements.size / DISPLAY_NUMBER + 1
-  string_count = acquired_elements.map(&:length).max
-  sliced = acquired_elements.map { |d| d.ljust(string_count) }.each_slice(height).to_a
+def modified_element(element)
+  height = element.size / DISPLAY_NUMBER + 1
+  string_count = element.map(&:length).max
+  sliced = element.map { |d| d.ljust(string_count) }.each_slice(height).to_a
   sliced.map { |data| data.values_at(0...height) }.transpose.map { |display| display.join(' ') }
 end
 
