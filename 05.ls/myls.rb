@@ -11,15 +11,8 @@ end
 
 def current_element
   options = ARGV.getopts('ar')
-  if options['a'] && options['r']
-    Dir.glob('*', File::FNM_DOTMATCH).reverse
-  elsif options['a']
-    Dir.glob('*', File::FNM_DOTMATCH)
-  elsif options['r']
-    Dir.glob('*').reverse
-  else
-    Dir.glob('*')
-  end
+  list = Dir.glob('*', options['a'] ? File::FNM_DOTMATCH : 0)
+  options['r'] ? list.reverse : list
 end
 
 def modified_element(elements)
