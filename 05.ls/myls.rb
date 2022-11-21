@@ -90,14 +90,16 @@ def hard_link
 end
 
 def user_name
+  maximum_digit = converted_to_statfiles.map { |element| Etc.getpwuid(element.uid).name.length }.max
   converted_to_statfiles.map do |element|
-    Etc.getpwuid(element.uid).name
+    Etc.getpwuid(element.uid).name.ljust(maximum_digit)
   end
 end
 
 def group_name
+  maximum_digit = converted_to_statfiles.map { |element| Etc.getgrgid(element.gid).name.length }.max
   converted_to_statfiles.map do |element|
-    Etc.getgrgid(element.gid).name
+    Etc.getgrgid(element.gid).name.ljust(maximum_digit)
   end
 end
 
