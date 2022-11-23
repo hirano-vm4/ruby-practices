@@ -23,7 +23,7 @@ FILE_TYPE = {
   'link' => 'l'
 }.freeze
 
-OPTIONS = ARGV.getopts('l')
+OPTIONS = ARGV.getopts('arl')
 
 def main
   if OPTIONS['l']
@@ -45,7 +45,8 @@ def main
 end
 
 def current_elements
-  Dir.glob('*')
+  list = Dir.glob('*', OPTIONS['a'] ? File::FNM_DOTMATCH : 0)
+  OPTIONS['r'] ? list.reverse : list
 end
 
 def modified_element(elements)
