@@ -8,7 +8,7 @@ def main
   formatted_element = read_file_contents
   formatted_element.each do |filename, content|
     print row_count(content).to_s.rjust(8) if option['l']
-    print tango_count(content).to_s.rjust(8) if option['w']
+    print word_count(content).to_s.rjust(8) if option['w']
     print byte_count(content).to_s.rjust(8) if option['c']
     print " #{filename}\n"
   end
@@ -39,15 +39,15 @@ end
 
 def total_display(elements, option)
   row_sum = 0
-  tango_sum = 0
+  word_sum = 0
   byte_sum = 0
   elements.each_value do |content|
     row_sum += row_count(content)
-    tango_sum += tango_count(content)
+    word_sum += word_count(content)
     byte_sum += byte_count(content)
   end
   print row_sum.to_s.rjust(8) if option['l']
-  print tango_sum.to_s.rjust(8) if option['w']
+  print word_sum.to_s.rjust(8) if option['w']
   print byte_sum.to_s.rjust(8) if option['c']
   print ' total'
 end
@@ -56,7 +56,7 @@ def row_count(element)
   element.split("\n").size
 end
 
-def tango_count(element)
+def word_count(element)
   element.split("\s").size
 end
 
