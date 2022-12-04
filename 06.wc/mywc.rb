@@ -5,14 +5,14 @@ require 'optparse'
 
 def main
   option = option_judgment
-  formatted_contents = read_file_contents
-  formatted_contents.each do |filename, content|
+  file_contents = read_file_contents
+  file_contents.each do |filename, content|
     print row_count(content).to_s.rjust(8) if option['l']
     print word_count(content).to_s.rjust(8) if option['w']
     print byte_count(content).to_s.rjust(8) if option['c']
     print " #{filename}\n"
   end
-  total_display(formatted_contents, option) if formatted_contents.size > 1
+  total_display(file_contents, option) if file_contents.size > 1
 end
 
 def option_judgment
