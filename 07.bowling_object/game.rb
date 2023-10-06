@@ -4,8 +4,8 @@ require_relative 'shot'
 require_relative 'frame'
 
 class Game
-  def initialize(frames)
-    @frames = frames.map { |frame| Frame.new(frame[0], frame[1], frame[2]) }
+  def initialize(argument)
+    @frames = format_args(argument).map { |frame| Frame.new(frame[0], frame[1], frame[2]) }
   end
 
   def score
@@ -15,5 +15,28 @@ class Game
 
       frame.calculate_score(next_frame, after_next_frame, index)
     end
+  end
+
+  def format_args(argument)
+    game_results = []
+    frame = []
+
+    argument.split(',').each do |score|
+      if game_results.length < 9
+        if score == 'X'
+          frame.push(score, 0)
+        else
+          frame.push(score)
+        end
+
+        if frame.length == 2
+          game_results.push(frame)
+          frame = []
+        end
+      else
+        frame.push(score)
+      end
+    end
+    game_results << frame
   end
 end
