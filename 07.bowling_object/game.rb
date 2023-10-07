@@ -17,11 +17,11 @@ class Game
     end
   end
 
-  def format_args(argument)
+  def format_args(bowling_score)
     game_results = []
     frame = []
 
-    argument.split(',').each do |score|
+    bowling_score.split(',').each do |score|
       if game_results.length < 9
         if score == 'X'
           frame.push(score, 0)
