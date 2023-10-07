@@ -4,8 +4,8 @@ require_relative 'shot'
 require_relative 'frame'
 
 class Game
-  def initialize(argument)
-    @frames = format_args(argument).map { |frame| Frame.new(frame[0], frame[1], frame[2]) }
+  def initialize(bowling_score)
+    @frames = format_args(bowling_score).map { |frame| Frame.new(frame[0], frame[1], frame[2]) }
   end
 
   def score
