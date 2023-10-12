@@ -16,17 +16,21 @@ class FileList
       stat_files = FileDetail.new(@dir_contents)
       puts stat_files.get_detail(@dir_contents)
     else
-      puts display_column_format
+      puts view_files
     end
   end
 
   private
 
-  def display_column_format
-    height = @dir_contents.size / DISPLAY_NUMBER + 1
+  def view_files
     max_length = @dir_contents.map(&:length).max
+    filled_strings = @dir_contents.map { |content| content.ljust(max_length + 3) }
+    display_groups = filled_strings.each_slice((@dir_contents.size.to_f / DISPLAY_NUMBER).ceil)
+    max_group_size = display_groups.map(&:size).max
 
-    aligned_contens = @dir_contents.map { |content| content.ljust(max_length) }.each_slice(height)
-    aligned_contens.map { |content| content.values_at(0..height) }.transpose.map { |display| display.join('  ') }
+    (0..max_group_size).map do |i|
+      row = display_groups.map { |group| group[i] }
+      row.compact.join('')
+    end
   end
 end
