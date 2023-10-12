@@ -16,13 +16,13 @@ class FileList
       stat_files = FileDetail.new(@dir_contents)
       puts stat_files.get_detail(@dir_contents)
     else
-      puts view_files
+      puts display_contents
     end
   end
 
   private
 
-  def view_files
+  def display_contents
     max_length = @dir_contents.map(&:length).max
     filled_strings = @dir_contents.map { |content| content.ljust(max_length + 3) }
     display_groups = filled_strings.each_slice((@dir_contents.size.to_f / DISPLAY_NUMBER).ceil)
