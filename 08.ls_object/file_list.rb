@@ -64,8 +64,8 @@ class Directory
   end
 
   def hard_links
-    max_length = @stat_files.map { |element| element.hard_link.length }.max
-    @stat_files.map { |element| element.hard_link.rjust(max_length + 1) }
+    max_length = @stat_files.map { |file| file.hard_link.length }.max
+    @stat_files.map { |file| file.hard_link.rjust(max_length + 1) }
   end
 
   def owners
