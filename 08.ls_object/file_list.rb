@@ -2,19 +2,18 @@
 
 require_relative 'file_detail'
 
-DISPLAY_NUMBER = 3
+class Directory
+  DISPLAY_NUMBER = 3
 
-class FileList
-  def initialize(options)
-    dir_contents = Dir.glob('*', options['a'] ? File::FNM_DOTMATCH : 0)
-    @dir_contents = options['r'] ? dir_contents.reverse : dir_contents
+  def initialize(sorted_contents, options)
+    @dir_contents = sorted_contents
+    @stat_files = sorted_contents.map { |content| FileDetail.new(content) }
     @options = options
   end
 
   def output
     if @options['l']
-      stat_files = FileDetail.new(@dir_contents)
-      puts stat_files.get_detail(@dir_contents)
+      puts display_content_details
     else
       puts display_contents
     end
@@ -32,5 +31,63 @@ class FileList
       row = display_groups.map { |group| group[i] }
       row.compact.join('')
     end
+  end
+
+  def display_content_details
+    total_block_size
+    [
+      types_and_permissions,
+      hard_links,
+      owners,
+      groups,
+      file_sizes,
+      last_modification_time,
+      display_names
+    ].transpose.map { |element| element.join(' ') }
+  end
+
+  def total_block_size
+    bs = @stat_files.sum(&:block_size)
+    puts "total #{bs}"
+  end
+
+  def types_and_permissions
+    file_types.zip(permissions).map(&:join)
+  end
+
+  def file_types
+    @stat_files.map(&:file_type)
+  end
+
+  def permissions
+    @stat_files.map(&:permission)
+  end
+
+  def hard_links
+    max_length = @stat_files.map { |element| element.hard_link.length }.max
+    @stat_files.map { |element| element.hard_link.rjust(max_length + 1) }
+  end
+
+  def owners
+    max_length = @stat_files.map { |file| file.owner.length }.max
+    @stat_files.map { |file| file.owner.ljust(max_length + 1) }
+  end
+
+  def groups
+    max_length = @stat_files.map { |file| file.group.length }.max
+    @stat_files.map { |file| file.group.ljust(max_length + 1) }
+  end
+
+  def file_sizes
+    max_length = @stat_files.map { |file| file.file_size.length }.max
+    @stat_files.map { |file| file.file_size.rjust(max_length) }
+  end
+
+  def last_modification_time
+    @stat_files.map(&:last_update_time)
+  end
+
+  def display_names
+    @stat_files.map(&:file_name)
   end
 end
