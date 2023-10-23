@@ -22,7 +22,7 @@ class Directory
 
   def get_dir_contents(options)
     dir_contents = Dir.glob('*', options['a'] ? File::FNM_DOTMATCH : 0)
-    sorted_contents = options['r'] ? dir_contents.reverse : dir_contents
+    options['r'] ? dir_contents.reverse : dir_contents
   end
 
   def display_contents
@@ -88,5 +88,3 @@ class Directory
     stat_files.map(&:file_name)
   end
 end
-
-
